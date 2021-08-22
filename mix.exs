@@ -23,7 +23,8 @@ defmodule AuthBlog.MixProject do
   defp deps do
     [
       {:cowboy, "~> 2.9.0"},
-      {:jason, "~> 1.2.2"}
+      {:jason, "~> 1.2.2"},
+      {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false}
     ]
   end
 end

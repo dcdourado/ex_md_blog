@@ -1,41 +1,44 @@
 defmodule AuthBlog.WebServer.RESTHandler do
   @moduledoc """
-  A REST handler for `AuthBlog.WebServer`..
+  A REST Cowboy handler for `AuthBlog.WebServer` being applied on `AuthBlog.WebServer.Router`.
   """
 
   @behaviour :cowboy_rest
 
   @impl :cowboy_rest
-  def init(req, method_handlers) do
-    method = parse_req_method(req)
-
-    case Keyword.fetch(method_handlers, method) do
-      {:ok, handler} ->
-        req = :cowboy_req.reply(200, headers(), body(req, handler), req)
-
-        {:ok, req, %{}}
-      :error ->
-        req = :cowboy_req.reply(404, headers(), "", req)
-
-        {:ok, req, %{}}
+  def init(req, method_handlers) when is_list(method_handlers) do
+    case Keyword.fetch(method_handlers, method(req)) do
+      {:ok, handler} -> reply_handle(req, handler)
+      :error -> reply_error(req, "invalid_route")
     end
   end
 
-  defp parse_req_method(%{method: "GET"}), do: :get
-  defp parse_req_method(%{method: "POST"}), do: :post
-  defp parse_req_method(%{method: "PUT"}), do: :put
-  defp parse_req_method(%{method: "PATCH"}), do: :patch
-  defp parse_req_method(%{method: "OPTIONS"}), do: :options
-
-  defp headers do
-    %{
-      "content-type" => "application/json"
-    }
+  def init(req, nil) do
+    reply_error(req, "invalid_route")
   end
 
-  defp body(req, handler) do
-    req
-    |> handler.("params")
-    |> Jason.encode!()
+  defp reply_handle(req, handler) do
+    {status, body} = handler.(req, "params")
+    encoded_body = Jason.encode!(body)
+
+    {:ok, :cowboy_req.reply(status, headers(), encoded_body, req), %{}}
+  end
+
+  defp reply_error(req, type) when is_bitstring(type) do
+    {:ok, :cowboy_req.reply(404, headers(), error(type), req), %{}}
+  end
+
+  defp method(%{method: "GET"}), do: :get
+  defp method(%{method: "POST"}), do: :post
+  defp method(%{method: "PUT"}), do: :put
+  defp method(%{method: "PATCH"}), do: :patch
+  defp method(%{method: "OPTIONS"}), do: :options
+
+  defp headers do
+    %{"content-type" => "application/json"}
+  end
+
+  defp error(type) do
+    Jason.encode!(%{error: type})
   end
 end

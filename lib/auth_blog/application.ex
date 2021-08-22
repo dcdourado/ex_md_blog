@@ -3,10 +3,12 @@ defmodule AuthBlog.Application do
 
   use Application
 
+  @port 8080
+
   @impl true
   def start(_type, _args) do
     children = [
-      {AuthBlog.WebServer, []}
+      {AuthBlog.WebServer, [port: @port]}
     ]
 
     opts = [strategy: :one_for_one, name: AuthBlog.Supervisor]
