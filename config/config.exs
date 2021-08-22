@@ -7,6 +7,4 @@ config :auth_blog, AuthBlog.Repo,
   hostname: "localhost"
 
 config :auth_blog,
-  ecto_repos: [AuthBlog.Repo],
-  migration_primary_key: [name: :id, type: :binary_id],
-  migration_foreign_key: [column: :id, type: :binary_id]
+  ecto_repos: [AuthBlog.Repo]
