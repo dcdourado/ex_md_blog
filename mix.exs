@@ -22,9 +22,18 @@ defmodule AuthBlog.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      # Webserver
       {:cowboy, "~> 2.9.0"},
+
+      # JSON parsing
       {:jason, "~> 1.2.2"},
-      {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false}
+
+      # Code style
+      {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false},
+
+      # Database
+      {:ecto_sql, "~> 3.7.0"},
+      {:postgrex, "~> 0.15.10"}
     ]
   end
 end
