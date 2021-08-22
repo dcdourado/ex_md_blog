@@ -6,4 +6,7 @@ config :auth_blog, AuthBlog.Repo,
   password: "postgres",
   hostname: "localhost"
 
-config :auth_blog, ecto_repos: [AuthBlog.Repo]
+config :auth_blog,
+  ecto_repos: [AuthBlog.Repo],
+  migration_primary_key: [name: :id, type: :binary_id],
+  migration_foreign_key: [column: :id, type: :binary_id]
