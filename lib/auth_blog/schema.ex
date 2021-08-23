@@ -9,6 +9,8 @@ defmodule AuthBlog.Schema do
       import Ecto.Changeset
       @primary_key {:id, :binary_id, autogenerate: true}
       @foreign_key_type :binary_id
+      # redacted fields are appearing
+      @derive {Jason.Encoder, except: [:__meta__]}
     end
   end
 end

@@ -22,7 +22,7 @@ defmodule AuthBlog.Blog.Post do
     field(:description, :string)
     field(:content, :string)
 
-    field(:deleted_at, :naive_datetime)
+    field(:deleted_at, :naive_datetime, redact: true)
     timestamps()
   end
 

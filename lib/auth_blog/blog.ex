@@ -8,6 +8,12 @@ defmodule AuthBlog.Blog do
 
   alias Ecto.Changeset
 
+  @doc "Lists posts"
+  @spec list_post() :: {:ok, list(Post.t())}
+  def list_post do
+    {:ok, Repo.all(Post)}
+  end
+
   @doc "Inserts a post"
   @spec insert_post(params :: map()) :: {:ok, Post.t()} | {:error, Changeset.t()}
   def insert_post(params) when is_map(params) do
