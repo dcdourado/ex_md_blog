@@ -12,7 +12,7 @@ defmodule AuthBlog.WebServer.Router do
   @namespace "/api/v1"
 
   @routes [
-    {"/posts", get: &Controller.posts_index/2}
+    {"/posts", get: &Controller.posts_index/2, post: &Controller.posts_insert/2}
   ]
 
   @doc "Builds routing list for cowboy"

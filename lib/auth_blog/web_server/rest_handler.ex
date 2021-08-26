@@ -18,14 +18,25 @@ defmodule AuthBlog.WebServer.RESTHandler do
   end
 
   defp reply_handle(req, handler) do
-    {status, body} = handler.(req, "params")
+    params = %{
+      body: parse_body!(req),
+      qs: parse_qs!(req)
+    }
+
+    {status, body} = handler.(req, params)
     encoded_body = Jason.encode!(body)
 
-    {:ok, :cowboy_req.reply(status, headers(), encoded_body, req), %{}}
+    req = :cowboy_req.set_resp_body(encoded_body, req)
+    req = :cowboy_req.set_resp_headers(reply_headers(), req)
+
+    {:ok, :cowboy_req.reply(status, req), %{}}
   end
 
   defp reply_error(req, type) when is_bitstring(type) do
-    {:ok, :cowboy_req.reply(404, headers(), error(type), req), %{}}
+    req = :cowboy_req.set_resp_body(error(type), req)
+    req = :cowboy_req.set_resp_headers(reply_headers(), req)
+
+    {:ok, :cowboy_req.reply(404, req), %{}}
   end
 
   defp method(%{method: "GET"}), do: :get
@@ -34,8 +45,26 @@ defmodule AuthBlog.WebServer.RESTHandler do
   defp method(%{method: "PATCH"}), do: :patch
   defp method(%{method: "OPTIONS"}), do: :options
 
-  defp headers do
+  defp reply_headers do
     %{"content-type" => "application/json"}
+  end
+
+  defp parse_body!(req) do
+    with {:has_body, true} <- {:has_body, :cowboy_req.has_body(req)},
+         {:ok, raw_body, _req} <- :cowboy_req.read_body(req),
+         {:ok, body} <- Jason.decode(raw_body) do
+      body
+    else
+      {:has_body, false} -> %{}
+      _ -> raise WithClauseError
+    end
+  end
+
+  defp parse_qs!(req) do
+    req
+    |> :cowboy_req.parse_qs()
+    |> Enum.filter(&(&1 !== true))
+    |> Map.new()
   end
 
   defp error(type) do
