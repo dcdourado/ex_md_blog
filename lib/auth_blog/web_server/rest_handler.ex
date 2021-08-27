@@ -20,7 +20,8 @@ defmodule AuthBlog.WebServer.RESTHandler do
   defp reply_handle(req, handler) do
     params = %{
       body: parse_body!(req),
-      qs: parse_qs!(req)
+      qs: parse_qs!(req),
+      bindings: req.bindings
     }
 
     {status, body} = handler.(req, params)
@@ -63,7 +64,7 @@ defmodule AuthBlog.WebServer.RESTHandler do
   defp parse_qs!(req) do
     req
     |> :cowboy_req.parse_qs()
-    |> Enum.filter(&(&1 !== true))
+    |> Enum.reject(&(&1 == true))
     |> Map.new()
   end
 

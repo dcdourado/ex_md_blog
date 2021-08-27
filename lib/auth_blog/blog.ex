@@ -8,6 +8,20 @@ defmodule AuthBlog.Blog do
 
   alias Ecto.Changeset
 
+  @doc "Fetches a post"
+  @spec fetch_post(filters :: Keyword.t()) ::
+          {:ok, Post.t()} | {:error, :not_found | :too_many_results}
+  def fetch_post(filters) when is_list(filters) do
+    try do
+      case Repo.get_by(Post, filters) do
+        nil -> {:error, :not_found}
+        post -> {:ok, post}
+      end
+    rescue
+      Ecto.MultipleResultsError -> {:error, :too_many_results}
+    end
+  end
+
   @doc "Lists posts"
   @spec list_post() :: {:ok, list(Post.t())}
   def list_post do
@@ -23,7 +37,8 @@ defmodule AuthBlog.Blog do
   end
 
   @doc "Updates a post"
-  @spec update_post(post :: Post.t(), params :: map()) :: {:ok, Post.t()} | {:error, Changeset.t()}
+  @spec update_post(post :: Post.t(), params :: map()) ::
+          {:ok, Post.t()} | {:error, Changeset.t()}
   def update_post(%Post{} = post, params) when is_map(params) do
     post
     |> Post.changeset(params)
