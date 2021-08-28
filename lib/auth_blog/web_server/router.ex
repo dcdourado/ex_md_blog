@@ -13,7 +13,7 @@ defmodule AuthBlog.WebServer.Router do
 
   @routes [
     {"/posts", get: &Controller.posts_index/2, post: &Controller.posts_insert/2},
-    {"/posts/:id", put: &Controller.posts_update/2}
+    {"/posts/:id", put: &Controller.posts_update/2, delete: &Controller.posts_delete/2}
   ]
 
   @doc "Builds routing list for cowboy"

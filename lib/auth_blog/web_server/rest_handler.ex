@@ -27,7 +27,13 @@ defmodule AuthBlog.WebServer.RESTHandler do
     {status, body} = handler.(req, params)
     encoded_body = Jason.encode!(body)
 
-    req = :cowboy_req.set_resp_body(encoded_body, req)
+    req =
+      if is_map(encoded_body) do
+        :cowboy_req.set_resp_body(encoded_body, req)
+      else
+        req
+      end
+
     req = :cowboy_req.set_resp_headers(reply_headers(), req)
 
     {:ok, :cowboy_req.reply(status, req), %{}}
@@ -44,6 +50,7 @@ defmodule AuthBlog.WebServer.RESTHandler do
   defp method(%{method: "POST"}), do: :post
   defp method(%{method: "PUT"}), do: :put
   defp method(%{method: "PATCH"}), do: :patch
+  defp method(%{method: "DELETE"}), do: :delete
   defp method(%{method: "OPTIONS"}), do: :options
 
   defp reply_headers do
