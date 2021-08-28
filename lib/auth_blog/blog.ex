@@ -12,14 +12,12 @@ defmodule AuthBlog.Blog do
   @spec fetch_post(filters :: Keyword.t()) ::
           {:ok, Post.t()} | {:error, :not_found | :too_many_results}
   def fetch_post(filters) when is_list(filters) do
-    try do
-      case Repo.get_by(Post, filters) do
-        nil -> {:error, :not_found}
-        post -> {:ok, post}
-      end
-    rescue
-      Ecto.MultipleResultsError -> {:error, :too_many_results}
+    case Repo.get_by(Post, filters) do
+      nil -> {:error, :not_found}
+      post -> {:ok, post}
     end
+  rescue
+    Ecto.MultipleResultsError -> {:error, :too_many_results}
   end
 
   @doc "Lists posts"

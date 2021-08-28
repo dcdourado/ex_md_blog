@@ -30,8 +30,10 @@ defmodule AuthBlog.Blog.Post do
   @spec changeset(params :: map()) :: Changeset.t()
   def changeset(params) when is_map(params) do
     %__MODULE__{}
-    |> changeset(params)
-    |> validate_required([:title, :content])
+    |> cast(params, [:title, :description, :content])
+    |> validate_required([:title, :description, :content])
+    |> validate_length(:title, max: 120)
+    |> validate_length(:description, max: 800)
   end
 
   @spec changeset(model :: __MODULE__.t(), params :: map()) :: Changeset.t()
@@ -39,9 +41,8 @@ defmodule AuthBlog.Blog.Post do
     model
     |> cast(params, [:title, :description, :content, :deleted_at])
     |> validate_deleted()
-    |> validate_length(:title, min: 1, max: 120)
-    |> validate_length(:description, min: 1, max: 800)
-    |> validate_length(:content, min: 1)
+    |> validate_length(:title, max: 120)
+    |> validate_length(:description, max: 800)
   end
 
   defp validate_deleted(%Changeset{data: %{deleted_at: %NaiveDateTime{}}} = changeset) do
