@@ -1,10 +1,12 @@
 defmodule AuthBlog.BlogTest do
-  use AuthBlog.RepoCase
+  use AuthBlog.RepoCase, async: true
 
   import AuthBlog.Factory
 
   alias AuthBlog.Blog
+  alias AuthBlog.Blog.Post
 
+  alias Ecto.Changeset
   alias Ecto.UUID
 
   describe "fetch_post/1" do
@@ -33,15 +35,85 @@ defmodule AuthBlog.BlogTest do
     end
   end
 
-  # describe "insert_post/1" do
+  describe "insert_post/1" do
+    test "inserts a post when params are valid" do
+      params = %{
+        title: "My testing post",
+        description: "It's not very informative",
+        content: "I told you so."
+      }
 
-  # end
+      assert {:ok,
+              %Post{
+                title: "My testing post",
+                description: "It's not very informative",
+                content: "I told you so."
+              }} = Blog.insert_post(params)
+    end
 
-  # describe "update_post/2" do
+    test "returns an error when params are invalid" do
+      assert {:error,
+              %Changeset{
+                valid?: false,
+                errors: [
+                  title: {"can't be blank", [validation: :required]},
+                  description: {"can't be blank", [validation: :required]},
+                  content: {"can't be blank", [validation: :required]}
+                ]
+              }} = Blog.insert_post(%{})
+    end
+  end
 
-  # end
+  describe "update_post/2" do
+    test "updates post when params are valid" do
+      post = insert(:post)
 
-  # describe "delete_post/2" do
+      params = %{
+        title: "My updated testing post",
+        description: "It's not very informative too",
+        content: "shh.",
+        deleted_at: NaiveDateTime.utc_now()
+      }
 
-  # end
+      assert {:ok,
+              %Post{
+                title: "My updated testing post",
+                description: "It's not very informative too",
+                content: "shh.",
+                deleted_at: %NaiveDateTime{}
+              }} = Blog.update_post(post, params)
+    end
+
+    test "returns an error when params are invalid" do
+      post = insert(:post)
+
+      params = %{
+        title: %{invalid: :parameter},
+        description: %{invalid: :parameter},
+        content: %{invalid: :parameter},
+        deleted_at: %{invalid: :parameter}
+      }
+
+      assert {:error,
+              %Changeset{
+                valid?: false,
+                errors: [
+                  title: {"is invalid", [type: :string, validation: :cast]},
+                  description: {"is invalid", [type: :string, validation: :cast]},
+                  content: {"is invalid", [type: :string, validation: :cast]},
+                  deleted_at: {"is invalid", [type: :naive_datetime, validation: :cast]}
+                ]
+              }} = Blog.update_post(post, params)
+    end
+  end
+
+  describe "delete_post/2" do
+    test "deletes a post when called" do
+      %{deleted_at: nil} = post = insert(:post)
+
+      assert :ok == Blog.delete_post(post)
+
+      assert {:ok, %Post{deleted_at: %NaiveDateTime{}}} = Blog.fetch_post(id: post.id)
+    end
+  end
 end

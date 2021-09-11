@@ -1,5 +1,5 @@
 defmodule AuthBlog.Blog.PostTest do
-  use ExUnit.Case
+  use AuthBlog.RepoCase, async: true
 
   alias AuthBlog.Blog.Post
   alias AuthBlog.Repo
