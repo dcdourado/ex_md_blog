@@ -1,3 +1,5 @@
+[![Actions Status](https://github.com/dcdourado/auth_blog/workflows/Elixir%20CI/badge.svg)](https://github.com/dcdourado/auth_blog/actions/workflows/elixir-ci.yml)
+
 # AuthBlog
 
 > The blog goal is to learn, write and practice about solid authorization and authentication methods and frameworks.
