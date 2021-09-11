@@ -7,7 +7,10 @@ defmodule AuthBlog.MixProject do
       version: "0.1.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      elixirc_paths: elixirc_paths(Mix.env()),
+      aliases: aliases(),
+      preferred_cli_env: cli_env()
     ]
   end
 
@@ -33,7 +36,34 @@ defmodule AuthBlog.MixProject do
 
       # Database
       {:ecto_sql, "~> 3.7.0"},
-      {:postgrex, "~> 0.15.10"}
+      {:postgrex, "~> 0.15.10"},
+
+      # Testing
+      {:ex_machina, "~> 2.7.0", only: :test}
+    ]
+  end
+
+  defp elixirc_paths(:test) do
+    ["lib", "test/support"]
+  end
+
+  defp elixirc_paths(_) do
+    ["lib"]
+  end
+
+  defp cli_env do
+    [
+      "test.setup": :test,
+      "test.reset": :test
+    ]
+  end
+
+  defp aliases do
+    [
+      setup: ["ecto.create", "ecto.migrate"],
+      reset: ["ecto.drop", "setup"],
+      "test.setup": ["ecto.create", "ecto.migrate"],
+      "test.reset": ["ecto.drop", "test.setup"]
     ]
   end
 end
