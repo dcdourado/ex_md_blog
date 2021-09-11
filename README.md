@@ -10,7 +10,7 @@ Using `:cowboy` we will expose a web server that renders posts (our main resourc
 Roadmap to v1.0.0
 
 - [x] Set up web server
-- [ ] Create Post schema & migration
+- [x] Create Post schema & migration
 - [ ] Build a markdown -> HTML parser
 - [ ] Create User, Identity and Credential schemas & migrations
 - [ ] Simple sign up
