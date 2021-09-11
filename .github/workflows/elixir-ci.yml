@@ -41,6 +41,8 @@ jobs:
       run: MIX_ENV=test mix deps.get
     - name: Compile
       run: MIX_ENV=test mix compile --warnings-as-errors
+    - name: Credo
+      run: MIX_ENV=test mix credo --strict
     - name: Setup database
       run: mix test.setup
     - name: Run tests
