@@ -3,6 +3,8 @@ defmodule AuthBlog.RepoCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       alias AuthBlog.Repo
@@ -12,10 +14,10 @@ defmodule AuthBlog.RepoCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(AuthBlog.Repo)
+    :ok = Sandbox.checkout(AuthBlog.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(AuthBlog.Repo, {:shared, self()})
+      Sandbox.mode(AuthBlog.Repo, {:shared, self()})
     end
 
     :ok
