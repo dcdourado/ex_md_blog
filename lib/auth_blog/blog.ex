@@ -54,4 +54,20 @@ defmodule AuthBlog.Blog do
       error -> error
     end
   end
+
+  @doc "Wraps a post on HTML"
+  @spec html_post(post :: Post.t()) :: bitstring()
+  def html_post(%Post{} = post) do
+    title = wrap_on_tag(post.title, "h1")
+    description = wrap_on_tag(post.description, "h2")
+    content = wrap_on_tag(post.content, "p")
+
+    """
+    #{title}
+    #{description}
+    #{content}
+    """
+  end
+
+  defp wrap_on_tag(value, tag), do: "<#{tag}>" <> value <> "</#{tag}>"
 end
