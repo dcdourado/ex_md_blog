@@ -39,7 +39,7 @@ defmodule AuthBlog.WebServer.RESTHandler do
     {:ok, :cowboy_req.reply(status, req), %{}}
   end
 
-  defp reply_error(req, type) when is_bitstring(type) do
+  defp reply_error(req, type) when is_binary(type) do
     req = :cowboy_req.set_resp_body(error(type), req)
     req = :cowboy_req.set_resp_headers(reply_headers(), req)
 

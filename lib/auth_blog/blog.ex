@@ -3,7 +3,7 @@ defmodule AuthBlog.Blog do
   Blog commands.
   """
 
-  alias AuthBlog.Blog.Post
+  alias AuthBlog.Blog.{Markdown, Post}
   alias AuthBlog.Repo
 
   alias Ecto.Changeset
@@ -53,5 +53,16 @@ defmodule AuthBlog.Blog do
       {:ok, _} -> :ok
       error -> error
     end
+  end
+
+  @doc "Wraps a post on HTML"
+  @spec html_post(post :: Post.t()) :: binary()
+  def html_post(%Post{} = post) do
+    """
+    # #{post.title}
+    ## #{post.description}
+    #{post.content}
+    """
+    |> Markdown.render()
   end
 end

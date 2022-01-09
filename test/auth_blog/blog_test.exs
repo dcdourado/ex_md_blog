@@ -116,4 +116,17 @@ defmodule AuthBlog.BlogTest do
       assert {:ok, %Post{deleted_at: %NaiveDateTime{}}} = Blog.fetch_post(id: post.id)
     end
   end
+
+  describe "html_post/1" do
+    test "returns a valid html when post is all filled" do
+      post = insert(:post, content: "Simple content")
+
+      assert """
+             <h1>#{post.title}</h1>
+             <h2>#{post.description}</h2>
+             <p>#{post.content}</p>
+             """
+             |> String.replace("\n", "") == Blog.html_post(post)
+    end
+  end
 end
