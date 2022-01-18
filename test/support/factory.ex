@@ -3,7 +3,7 @@ defmodule AuthBlog.Factory do
 
   use ExMachina.Ecto, repo: AuthBlog.Repo
 
-  alias AuthBlog.Blog.Post
+  alias AuthBlog.Posts.Post
 
   def post_factory do
     %Post{

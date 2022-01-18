@@ -1,4 +1,4 @@
-defmodule AuthBlog.Blog.Post do
+defmodule AuthBlog.Posts.Post do
   @moduledoc """
   Post schema.
   """

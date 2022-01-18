@@ -1,41 +1,41 @@
-defmodule AuthBlog.BlogTest do
+defmodule AuthBlog.PostsTest do
   use AuthBlog.RepoCase, async: true
 
   import AuthBlog.Factory
 
-  alias AuthBlog.Blog
-  alias AuthBlog.Blog.Post
+  alias AuthBlog.Posts
+  alias AuthBlog.Posts.Post
 
   alias Ecto.Changeset
   alias Ecto.UUID
 
-  describe "fetch_post/1" do
+  describe "fetch/1" do
     test "fetches a post when given params are related to only one result" do
       post = insert(:post)
 
-      assert {:ok, ^post} = Blog.fetch_post(id: post.id)
+      assert {:ok, ^post} = Posts.fetch(id: post.id)
     end
 
     test "returns an error when no record was found" do
-      assert {:error, :not_found} == Blog.fetch_post(id: UUID.generate())
+      assert {:error, :not_found} == Posts.fetch(id: UUID.generate())
     end
 
     test "returns an error when more than one result is found" do
       insert_list(2, :post, title: "common title")
 
-      assert {:error, :too_many_results} == Blog.fetch_post(title: "common title")
+      assert {:error, :too_many_results} == Posts.fetch(title: "common title")
     end
   end
 
-  describe "list_post/1" do
+  describe "list/1" do
     test "lists all posts" do
       insert_list(5, :post)
 
-      assert {:ok, [_post1, _post2, _post3, _post4, _post5]} = Blog.list_post()
+      assert {:ok, [_post1, _post2, _post3, _post4, _post5]} = Posts.list()
     end
   end
 
-  describe "insert_post/1" do
+  describe "insert/1" do
     test "inserts a post when params are valid" do
       params = %{
         title: "My testing post",
@@ -48,7 +48,7 @@ defmodule AuthBlog.BlogTest do
                 title: "My testing post",
                 description: "It's not very informative",
                 content: "I told you so."
-              }} = Blog.insert_post(params)
+              }} = Posts.insert(params)
     end
 
     test "returns an error when params are invalid" do
@@ -60,11 +60,11 @@ defmodule AuthBlog.BlogTest do
                   description: {"can't be blank", [validation: :required]},
                   content: {"can't be blank", [validation: :required]}
                 ]
-              }} = Blog.insert_post(%{})
+              }} = Posts.insert(%{})
     end
   end
 
-  describe "update_post/2" do
+  describe "update/2" do
     test "updates post when params are valid" do
       post = insert(:post)
 
@@ -81,7 +81,7 @@ defmodule AuthBlog.BlogTest do
                 description: "It's not very informative too",
                 content: "shh.",
                 deleted_at: %NaiveDateTime{}
-              }} = Blog.update_post(post, params)
+              }} = Posts.update(post, params)
     end
 
     test "returns an error when params are invalid" do
@@ -103,22 +103,22 @@ defmodule AuthBlog.BlogTest do
                   content: {"is invalid", [type: :string, validation: :cast]},
                   deleted_at: {"is invalid", [type: :naive_datetime, validation: :cast]}
                 ]
-              }} = Blog.update_post(post, params)
+              }} = Posts.update(post, params)
     end
   end
 
-  describe "delete_post/2" do
+  describe "delete/2" do
     test "deletes a post when called" do
       %{deleted_at: nil} = post = insert(:post)
 
-      assert :ok == Blog.delete_post(post)
+      assert :ok == Posts.delete(post)
 
-      assert {:ok, %Post{deleted_at: %NaiveDateTime{}}} = Blog.fetch_post(id: post.id)
+      assert {:ok, %Post{deleted_at: %NaiveDateTime{}}} = Posts.fetch(id: post.id)
     end
   end
 
-  describe "html_post/1" do
-    test "returns a valid html when post is all filled" do
+  describe "to_html/1" do
+    test "returns a valid html when post is correctly filled" do
       post = insert(:post, content: "Simple content")
 
       assert """
@@ -126,7 +126,7 @@ defmodule AuthBlog.BlogTest do
              <h2>#{post.description}</h2>
              <p>#{post.content}</p>
              """
-             |> String.replace("\n", "") == Blog.html_post(post)
+             |> String.replace("\n", "") == Posts.to_html(post)
     end
   end
 end

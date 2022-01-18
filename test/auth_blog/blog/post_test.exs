@@ -1,7 +1,7 @@
-defmodule AuthBlog.Blog.PostTest do
+defmodule AuthBlog.Posts.PostTest do
   use AuthBlog.RepoCase, async: true
 
-  alias AuthBlog.Blog.Post
+  alias AuthBlog.Posts.Post
   alias AuthBlog.Repo
 
   alias Ecto.Changeset
