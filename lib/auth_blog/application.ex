@@ -8,8 +8,8 @@ defmodule AuthBlog.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {AuthBlog.WebServer, [port: @port]},
-      {AuthBlog.Repo, []}
+      {AuthBlog.Repo, []},
+      {AuthBlog.WebServer, [port: @port]}
     ]
 
     opts = [strategy: :one_for_one, name: AuthBlog.Supervisor]

@@ -21,9 +21,9 @@ defmodule AuthBlog.Posts do
   end
 
   @doc "Lists posts"
-  @spec list() :: {:ok, list(Post.t())}
-  def list do
-    {:ok, Repo.all(Post)}
+  @spec list() :: list(Post.t())
+  def list(opts \\ []) do
+    Repo.all(Post, opts)
   end
 
   @doc "Inserts a post"

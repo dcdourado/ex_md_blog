@@ -7,6 +7,6 @@
     <title>Auth Blog</title>
 </head>
 <body>
-    This is the very first render of this blog.
+    <%= posts %>
 </body>
 </html>
