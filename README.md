@@ -12,9 +12,10 @@ Using `:cowboy` we will expose a web server that renders posts (our main resourc
 Roadmap to v1.0.0
 
 - [x] Set up web server
-- [x] Create Post schema & migration
-- [ ] Build a markdown -> HTML parser
-- [ ] Create User, Identity and Credential schemas & migrations
-- [ ] Simple sign up
+- [x] Create Posts domain
+- [x] Build a Markdown-to-HTML parser
+- [x] Render blog HTML dynamically
+- [ ] User management (linking to Posts)
+- [ ] Sign up and sign in
 - [ ] First real blog post about what we've done so far
 - [ ] Deploy app

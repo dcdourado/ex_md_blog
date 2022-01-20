@@ -5,6 +5,7 @@ defmodule AuthBlog.WebServer do
 
   use GenServer
 
+  alias AuthBlog.Page
   alias AuthBlog.WebServer.Router
 
   @name :webserver
@@ -19,12 +20,15 @@ defmodule AuthBlog.WebServer do
 
   @impl GenServer
   def init(port: port) do
-    {:ok, _} = :cowboy.start_clear(:http, [port: port], %{env: %{dispatch: dispatch_config()}})
+    {:ok, html_path} = Page.render(1)
+
+    {:ok, _} =
+      :cowboy.start_clear(:http, [port: port], %{env: %{dispatch: dispatch_config(html_path)}})
   end
 
   # Private functions
 
-  defp dispatch_config do
-    :cowboy_router.compile(Router.build())
+  defp dispatch_config(html_path) do
+    :cowboy_router.compile(Router.build(html_path))
   end
 end

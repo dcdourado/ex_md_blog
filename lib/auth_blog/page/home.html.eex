@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0 2vw;
+    }
+
+    header {
+    }
+
+    main {
+        margin: 5vh 0;
+    }
+
+    section {
+        background-color: #f0f0f0;
+        border: 2px solid #303030;
+        border-radius: 2px;
+        padding: 10px;
+    }
+
+    html {
+        background-color: #f5feff;
+    }
+
+    @media only screen and (max-width: 767px) {
+        body {
+            padding: 0 2vw;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        body {
+            padding: 0 15vw;
+        }
+    }
+    </style>
+    <title><%= blog_title %></title>
+</head>
+<body>
+    <header>
+        <h1><%= blog_title %></h1>
+        <h4><%= blog_description %>
+    </header>
+    <main>
+        <%= posts %>
+    </main>
+    <footer>
+        <span>Maintained by <%= author %></span>
+    </footer>
+</body>
+</html>

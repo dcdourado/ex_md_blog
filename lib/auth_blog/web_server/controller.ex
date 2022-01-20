@@ -3,8 +3,8 @@ defmodule AuthBlog.WebServer.Controller do
   Controller.
   """
 
-  alias AuthBlog.Blog
-  alias AuthBlog.Blog.Post
+  alias AuthBlog.Posts
+  alias AuthBlog.Posts.Post
 
   alias Ecto.Changeset
 
@@ -12,7 +12,7 @@ defmodule AuthBlog.WebServer.Controller do
   @spec posts_index(req :: term(), params :: map()) ::
           {status_code :: pos_integer(), {:ok, list(Post.t())}}
   def posts_index(_req, _params) do
-    case Blog.list_post() do
+    case Posts.list() do
       {:ok, result} -> {200, %{result: result}}
       {:error, reason} -> {500, %{error: reason}}
     end
@@ -22,7 +22,7 @@ defmodule AuthBlog.WebServer.Controller do
   @spec posts_insert(req :: term(), params :: map()) ::
           {status_code :: pos_integer(), %{result: map()} | %{error: term()}}
   def posts_insert(_req, params) do
-    case Blog.insert_post(params.body) do
+    case Posts.insert(params.body) do
       {:ok, result} -> {200, %{result: result}}
       {:error, %Changeset{} = reason} -> {401, %{error: reason}}
       {:error, reason} -> {500, %{error: reason}}
@@ -33,8 +33,8 @@ defmodule AuthBlog.WebServer.Controller do
   @spec posts_update(req :: term(), params :: map()) ::
           {status_code :: pos_integer(), %{result: map()} | %{error: term()}}
   def posts_update(_req, %{bindings: bindings, body: body} = _params) do
-    with {:ok, post} <- Blog.fetch_post(id: bindings.id),
-         {:ok, result} <- Blog.update_post(post, body) do
+    with {:ok, post} <- Posts.fetch(id: bindings.id),
+         {:ok, result} <- Posts.update(post, body) do
       {200, %{result: result}}
     else
       {:error, %Changeset{} = reason} -> {401, %{error: reason}}
@@ -47,8 +47,8 @@ defmodule AuthBlog.WebServer.Controller do
   @spec posts_delete(req :: term(), params :: map()) ::
           {status_code :: pos_integer(), %{} | %{error: term()}}
   def posts_delete(_req, %{bindings: bindings} = _params) do
-    with {:ok, post} <- Blog.fetch_post(id: bindings.id),
-         :ok <- Blog.delete_post(post) do
+    with {:ok, post} <- Posts.fetch(id: bindings.id),
+         :ok <- Posts.delete(post) do
       {204, nil}
     else
       {:error, :not_found = reason} -> {404, %{error: reason}}

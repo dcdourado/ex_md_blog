@@ -6,8 +6,7 @@ defmodule AuthBlog.WebServer.Router do
     {"/path", method: handler}
   """
 
-  alias AuthBlog.WebServer.Controller
-  alias AuthBlog.WebServer.RESTHandler
+  alias AuthBlog.WebServer.{Controller, RESTHandler}
 
   @namespace "/api/v1"
 
@@ -17,8 +16,9 @@ defmodule AuthBlog.WebServer.Router do
   ]
 
   @doc "Builds routing list for cowboy"
-  @spec build() :: list({route :: String.t(), conn_handler :: module(), path_handler :: fun()})
-  def build do
+  @spec build(html_path :: String.t()) ::
+          list({route :: String.t(), conn_handler :: module(), path_handler :: fun()})
+  def build(html_path) do
     [
       {:_,
        @routes
@@ -26,7 +26,7 @@ defmodule AuthBlog.WebServer.Router do
          {@namespace <> path, RESTHandler, path_handlers}
        end)
        |> Enum.concat([
-         {"/", :cowboy_static, {:file, "assets/homepage.html"}},
+         {"/", :cowboy_static, {:file, html_path}},
          {"/[...]", RESTHandler, nil}
        ])}
     ]

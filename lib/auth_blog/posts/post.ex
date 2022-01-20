@@ -1,4 +1,4 @@
-defmodule AuthBlog.Blog.Post do
+defmodule AuthBlog.Posts.Post do
   @moduledoc """
   Post schema.
   """
@@ -10,7 +10,6 @@ defmodule AuthBlog.Blog.Post do
   @type t :: %__MODULE__{
           id: UUID.t(),
           title: String.t(),
-          description: String.t(),
           content: String.t(),
           inserted_at: NaiveDateTime.t(),
           updated_at: NaiveDateTime.t(),
@@ -18,11 +17,10 @@ defmodule AuthBlog.Blog.Post do
         }
 
   schema "blog_posts" do
-    field(:title, :string)
-    field(:description, :string)
-    field(:content, :string)
+    field :title, :string
+    field :content, :string
 
-    field(:deleted_at, :naive_datetime, redact: true)
+    field :deleted_at, :naive_datetime, redact: true
     timestamps()
   end
 
@@ -30,19 +28,17 @@ defmodule AuthBlog.Blog.Post do
   @spec changeset(params :: map()) :: Changeset.t()
   def changeset(params) when is_map(params) do
     %__MODULE__{}
-    |> cast(params, [:title, :description, :content])
-    |> validate_required([:title, :description, :content])
+    |> cast(params, [:title, :content])
+    |> validate_required([:title, :content])
     |> validate_length(:title, max: 120)
-    |> validate_length(:description, max: 800)
   end
 
   @spec changeset(model :: __MODULE__.t(), params :: map()) :: Changeset.t()
   def changeset(%__MODULE__{} = model, params) when is_map(params) do
     model
-    |> cast(params, [:title, :description, :content, :deleted_at])
+    |> cast(params, [:title, :content, :deleted_at])
     |> validate_deleted()
     |> validate_length(:title, max: 120)
-    |> validate_length(:description, max: 800)
   end
 
   defp validate_deleted(%Changeset{data: %{deleted_at: %NaiveDateTime{}}} = changeset) do
