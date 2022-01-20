@@ -59,9 +59,10 @@ defmodule AuthBlog.Posts do
   @spec to_html(post :: Post.t()) :: String.t()
   def to_html(%Post{} = post) do
     """
+    <section>
     # #{post.title}
-    ## #{post.description}
     #{post.content}
+    </section>
     """
     |> Markdown.render()
   end

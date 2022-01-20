@@ -39,14 +39,12 @@ defmodule AuthBlog.PostsTest do
     test "inserts a post when params are valid" do
       params = %{
         title: "My testing post",
-        description: "It's not very informative",
         content: "I told you so."
       }
 
       assert {:ok,
               %Post{
                 title: "My testing post",
-                description: "It's not very informative",
                 content: "I told you so."
               }} = Posts.insert(params)
     end
@@ -57,7 +55,6 @@ defmodule AuthBlog.PostsTest do
                 valid?: false,
                 errors: [
                   title: {"can't be blank", [validation: :required]},
-                  description: {"can't be blank", [validation: :required]},
                   content: {"can't be blank", [validation: :required]}
                 ]
               }} = Posts.insert(%{})
@@ -70,7 +67,6 @@ defmodule AuthBlog.PostsTest do
 
       params = %{
         title: "My updated testing post",
-        description: "It's not very informative too",
         content: "shh.",
         deleted_at: NaiveDateTime.utc_now()
       }
@@ -78,7 +74,6 @@ defmodule AuthBlog.PostsTest do
       assert {:ok,
               %Post{
                 title: "My updated testing post",
-                description: "It's not very informative too",
                 content: "shh.",
                 deleted_at: %NaiveDateTime{}
               }} = Posts.update(post, params)
@@ -89,7 +84,6 @@ defmodule AuthBlog.PostsTest do
 
       params = %{
         title: %{invalid: :parameter},
-        description: %{invalid: :parameter},
         content: %{invalid: :parameter},
         deleted_at: %{invalid: :parameter}
       }
@@ -99,7 +93,6 @@ defmodule AuthBlog.PostsTest do
                 valid?: false,
                 errors: [
                   title: {"is invalid", [type: :string, validation: :cast]},
-                  description: {"is invalid", [type: :string, validation: :cast]},
                   content: {"is invalid", [type: :string, validation: :cast]},
                   deleted_at: {"is invalid", [type: :naive_datetime, validation: :cast]}
                 ]
@@ -123,7 +116,6 @@ defmodule AuthBlog.PostsTest do
 
       assert """
              <h1>#{post.title}</h1>
-             <h2>#{post.description}</h2>
              <p>#{post.content}</p>
              """
              |> String.replace("\n", "") == Posts.to_html(post)

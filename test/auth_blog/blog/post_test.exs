@@ -10,12 +10,10 @@ defmodule AuthBlog.Posts.PostTest do
     test "creates a valid changeset when given params are valid" do
       params = %{
         title: "Title",
-        description: "Description",
         content: "Content"
       }
 
-      assert %Changeset{valid?: true, changes: %{title: _, description: _, content: _}} =
-               Post.changeset(params)
+      assert %Changeset{valid?: true, changes: %{title: _, content: _}} = Post.changeset(params)
     end
 
     test "validates required field creating an invalid changeset if params are invalid" do
@@ -25,7 +23,6 @@ defmodule AuthBlog.Posts.PostTest do
                valid?: false,
                errors: [
                  title: {"can't be blank", [validation: :required]},
-                 description: {"can't be blank", [validation: :required]},
                  content: {"can't be blank", [validation: :required]}
                ]
              } = Post.changeset(params)
@@ -34,7 +31,6 @@ defmodule AuthBlog.Posts.PostTest do
     test "does not cast deleted_at" do
       params = %{
         title: "Title",
-        description: "Description",
         content: "Content",
         deleted_at: NaiveDateTime.utc_now()
       }
@@ -51,7 +47,6 @@ defmodule AuthBlog.Posts.PostTest do
     setup do
       params = %{
         title: "BeforeTitle",
-        description: "BeforeDescription",
         content: "BeforeContent"
       }
 
@@ -66,14 +61,13 @@ defmodule AuthBlog.Posts.PostTest do
     test "casts all params", ctx do
       params = %{
         title: "AfterTitle",
-        description: "AfterDescription",
         content: "AfterContent",
         deleted_at: NaiveDateTime.utc_now()
       }
 
       assert %Changeset{
                valid?: true,
-               changes: %{title: _, description: _, content: _, deleted_at: _}
+               changes: %{title: _, content: _, deleted_at: _}
              } = Post.changeset(ctx.post, params)
     end
 
@@ -93,17 +87,6 @@ defmodule AuthBlog.Posts.PostTest do
                     [count: 120, validation: :length, kind: :max, type: :string]}
                ]
              } = Post.changeset(ctx.post, %{title: gen_string(121)})
-    end
-
-    test "validates description length", ctx do
-      assert %Changeset{
-               valid?: false,
-               errors: [
-                 description:
-                   {"should be at most %{count} character(s)",
-                    [count: 800, validation: :length, kind: :max, type: :string]}
-               ]
-             } = Post.changeset(ctx.post, %{description: gen_string(801)})
     end
   end
 

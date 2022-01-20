@@ -8,7 +8,6 @@ defmodule AuthBlog.Factory do
   def post_factory do
     %Post{
       title: "Title",
-      description: "Description",
       content: "__Content__"
     }
   end

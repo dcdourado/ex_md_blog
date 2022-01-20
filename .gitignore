@@ -27,3 +27,6 @@ auth_blog-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# Rendered HTML files
+/**/*.html
