@@ -31,7 +31,7 @@ defmodule AuthBlog.PostsTest do
     test "lists all posts" do
       insert_list(5, :post)
 
-      assert {:ok, [_post1, _post2, _post3, _post4, _post5]} = Posts.list()
+      assert [_post1, _post2, _post3, _post4, _post5] = Posts.list()
     end
   end
 
@@ -115,8 +115,10 @@ defmodule AuthBlog.PostsTest do
       post = insert(:post, content: "Simple content")
 
       assert """
+             <section>
              <h1>#{post.title}</h1>
              <p>#{post.content}</p>
+             </section>
              """
              |> String.replace("\n", "") == Posts.to_html(post)
     end

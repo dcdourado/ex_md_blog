@@ -59,11 +59,12 @@ defmodule AuthBlog.Posts do
   @spec to_html(post :: Post.t()) :: String.t()
   def to_html(%Post{} = post) do
     """
-    <section>
     # #{post.title}
     #{post.content}
-    </section>
     """
     |> Markdown.render()
+    |> enclose_with("section")
   end
+
+  defp enclose_with(content, tag), do: "<#{tag}>#{content}</#{tag}>"
 end
