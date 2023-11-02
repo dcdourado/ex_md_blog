@@ -15,7 +15,5 @@ Roadmap to v1.0.0
 - [x] Create Posts domain
 - [x] Build a Markdown-to-HTML parser
 - [x] Render blog HTML dynamically
-- [ ] User management (linking to Posts)
-- [ ] Sign up and sign in
 - [ ] First real blog post about what we've done so far
 - [ ] Deploy app
