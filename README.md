@@ -31,3 +31,9 @@ iex -S mix
 ```
 
 Blog can be accessed at http://localhost:8080/
+
+## Deploy
+
+```shell
+flyctl deploy
+```

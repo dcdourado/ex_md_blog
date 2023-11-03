@@ -15,7 +15,7 @@ defmodule ExMdBlog.Page do
 
     full_html =
       EEx.eval_file(@home_file_path,
-        blog_title: "dcdourado.dev",
+        blog_title: "dcdourado.me",
         blog_description: "My journey learnings and thoughts as a software engineer",
         posts: html_posts,
         author: "dcdourado",
