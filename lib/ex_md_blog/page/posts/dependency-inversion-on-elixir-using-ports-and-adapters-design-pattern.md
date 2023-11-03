@@ -5,7 +5,7 @@
 Dependency Inversion is a well-known software development principle, described by Robert C. Martin as the responsible of systems to become flexible by making source code dependencies refer only to abstractions and not to concrete items.
 
 ![Dependency Inversion demonstrations taken from Clean Architecture book](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/exvk6d3gddlcparbb5vq.jpeg)
-Dependency Inversion demonstration taken from Clean Architecture book.
+<center>Dependency Inversion demonstration taken from Clean Architecture book</center>
 
 Deciding which implementation will be used in a given piece of code can be very useful and is commonly used to develop mocks on tests that involves external dependencies, such as HTTP calls or event publications.
 
