@@ -15,10 +15,12 @@ defmodule ExMdBlog.Page do
 
     full_html =
       EEx.eval_file(@home_file_path,
-        blog_title: "Dioblog",
-        blog_description: "software engineering discussions and some other stuff",
+        blog_title: "Staff Journey",
+        blog_description: "My journey learnings and thoughts as a software engineer",
         posts: html_posts,
-        author: "@dcdourado"
+        author: "dcdourado",
+        linkedin: "https://linkedin.com/in/dcdourado",
+        github: "https://github.com/dcdourado"
       )
 
     # removing .eex of the original path

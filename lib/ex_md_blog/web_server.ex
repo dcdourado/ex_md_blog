@@ -4,6 +4,7 @@ defmodule ExMdBlog.WebServer do
   """
 
   use GenServer
+  require Logger
 
   alias ExMdBlog.Page
   alias ExMdBlog.WebServer.Router
@@ -13,6 +14,7 @@ defmodule ExMdBlog.WebServer do
   # Api
 
   def start_link([port: port] = opts) when is_integer(port) do
+
     GenServer.start_link(__MODULE__, opts, name: @name)
   end
 
@@ -20,6 +22,7 @@ defmodule ExMdBlog.WebServer do
 
   @impl GenServer
   def init(port: port) do
+    Logger.info("Starting web server on port #{port}")
     {:ok, html_path} = Page.render(1)
 
     {:ok, _} =

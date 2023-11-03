@@ -10,9 +10,6 @@
         padding: 0 2vw;
     }
 
-    header {
-    }
-
     main {
         margin: 5vh 0;
     }
@@ -22,6 +19,12 @@
         border: 2px solid #303030;
         border-radius: 2px;
         padding: 10px;
+    }
+
+    footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     html {
@@ -51,7 +54,8 @@
         <%= posts %>
     </main>
     <footer>
-        <span>Maintained by <%= author %></span>
+        <span>Maintained by @<%= author %></span>
+        <span>Find me on <a href="<%= linkedin %>">Linkedin</a> and <a href="<%= github %>">Github</a></span>
     </footer>
 </body>
 </html>
