@@ -17,3 +17,21 @@ Roadmap to v1.0.0
 - [x] Render blog HTML dynamically
 - [ ] First real blog post about what we've done so far
 - [ ] Deploy app
+
+
+## Setup
+
+```shell
+mix deps.get
+mix deps.compile
+mix compile
+
+# spin database
+docker compose up -d
+
+mix ecto.create
+mix ecto.migrate
+
+# run
+iex -S mix
+```

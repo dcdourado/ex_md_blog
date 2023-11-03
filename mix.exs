@@ -26,20 +26,24 @@ defmodule AuthBlog.MixProject do
   defp deps do
     [
       # Webserver
-      {:cowboy, "~> 2.9.0"},
+      {:cowboy, "~> 2.10.0"},
 
       # JSON parsing
-      {:jason, "~> 1.2.2"},
+      {:jason, "~> 1.4.1"},
 
       # Code style
-      {:credo, "~> 1.5.6", only: [:dev, :test], runtime: false},
+      {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
 
       # Database
-      {:ecto_sql, "~> 3.7.0"},
-      {:postgrex, "~> 0.15.10"},
+      {:ecto, "~> 3.10.3"},
+      {:ecto_sql, "~> 3.10.2"},
+      {:postgrex, "~> 0.17.3"},
 
       # Testing
-      {:ex_machina, "~> 2.7.0", only: :test}
+      {:ex_machina, "~> 2.7.0", only: :test},
+
+      # Observing
+      {:telemetry, "~> 1.2.1"},
     ]
   end
 
