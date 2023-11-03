@@ -1,9 +1,9 @@
-defmodule AuthBlog.Factory do
+defmodule ExMdBlog.Factory do
   @moduledoc false
 
-  use ExMachina.Ecto, repo: AuthBlog.Repo
+  use ExMachina.Ecto, repo: ExMdBlog.Repo
 
-  alias AuthBlog.Posts.Post
+  alias ExMdBlog.Posts.Post
 
   def post_factory do
     %Post{

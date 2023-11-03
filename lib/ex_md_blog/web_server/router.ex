@@ -1,12 +1,12 @@
-defmodule AuthBlog.WebServer.Router do
+defmodule ExMdBlog.WebServer.Router do
   @moduledoc """
-  Defines routes and links them to `AuthBlog.WebServer.Controller` by method.
+  Defines routes and links them to `ExMdBlog.WebServer.Controller` by method.
 
   Configuration example:
     {"/path", method: handler}
   """
 
-  alias AuthBlog.WebServer.{Controller, RESTHandler}
+  alias ExMdBlog.WebServer.{Controller, RESTHandler}
 
   @namespace "/api/v1"
 

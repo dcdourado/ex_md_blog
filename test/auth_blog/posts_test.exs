@@ -1,10 +1,10 @@
-defmodule AuthBlog.PostsTest do
-  use AuthBlog.RepoCase, async: true
+defmodule ExMdBlog.PostsTest do
+  use ExMdBlog.RepoCase, async: true
 
-  import AuthBlog.Factory
+  import ExMdBlog.Factory
 
-  alias AuthBlog.Posts
-  alias AuthBlog.Posts.Post
+  alias ExMdBlog.Posts
+  alias ExMdBlog.Posts.Post
 
   alias Ecto.Changeset
   alias Ecto.UUID

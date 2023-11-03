@@ -1,5 +1,5 @@
-defmodule AuthBlog do
+defmodule ExMdBlog do
   @moduledoc """
-  Documentation for `AuthBlog`.
+  Documentation for `ExMdBlog`.
   """
 end

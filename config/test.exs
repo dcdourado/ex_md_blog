@@ -1,7 +1,7 @@
 import Config
 
-config :auth_blog, AuthBlog.Repo,
-  database: "auth_blog_test",
+config :ex_md_blog, ExMdBlog.Repo,
+  database: "ex_md_blog_test",
   username: "postgres",
   password: "postgres",
   hostname: "localhost",

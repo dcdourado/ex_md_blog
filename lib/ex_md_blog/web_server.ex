@@ -1,12 +1,12 @@
-defmodule AuthBlog.WebServer do
+defmodule ExMdBlog.WebServer do
   @moduledoc """
   A WebServer over Cowboy.
   """
 
   use GenServer
 
-  alias AuthBlog.Page
-  alias AuthBlog.WebServer.Router
+  alias ExMdBlog.Page
+  alias ExMdBlog.WebServer.Router
 
   @name :webserver
 

@@ -1,4 +1,4 @@
-defmodule AuthBlog.RepoCase do
+defmodule ExMdBlog.RepoCase do
   @moduledoc false
 
   use ExUnit.CaseTemplate
@@ -7,17 +7,17 @@ defmodule AuthBlog.RepoCase do
 
   using do
     quote do
-      alias AuthBlog.Repo
+      alias ExMdBlog.Repo
 
-      import AuthBlog.RepoCase
+      import ExMdBlog.RepoCase
     end
   end
 
   setup tags do
-    :ok = Sandbox.checkout(AuthBlog.Repo)
+    :ok = Sandbox.checkout(ExMdBlog.Repo)
 
     unless tags[:async] do
-      Sandbox.mode(AuthBlog.Repo, {:shared, self()})
+      Sandbox.mode(ExMdBlog.Repo, {:shared, self()})
     end
 
     :ok

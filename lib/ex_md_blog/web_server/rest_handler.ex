@@ -1,6 +1,6 @@
-defmodule AuthBlog.WebServer.RESTHandler do
+defmodule ExMdBlog.WebServer.RESTHandler do
   @moduledoc """
-  A REST Cowboy handler for `AuthBlog.WebServer` being applied on `AuthBlog.WebServer.Router`.
+  A REST Cowboy handler for `ExMdBlog.WebServer` being applied on `ExMdBlog.WebServer.Router`.
   """
 
   @behaviour :cowboy_rest

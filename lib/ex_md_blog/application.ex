@@ -1,4 +1,4 @@
-defmodule AuthBlog.Application do
+defmodule ExMdBlog.Application do
   @moduledoc false
 
   use Application
@@ -8,11 +8,11 @@ defmodule AuthBlog.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {AuthBlog.Repo, []},
-      {AuthBlog.WebServer, [port: @port]}
+      {ExMdBlog.Repo, []},
+      {ExMdBlog.WebServer, [port: @port]}
     ]
 
-    opts = [strategy: :one_for_one, name: AuthBlog.Supervisor]
+    opts = [strategy: :one_for_one, name: ExMdBlog.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

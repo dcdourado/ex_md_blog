@@ -1,4 +1,4 @@
-defmodule AuthBlog.Markdown do
+defmodule ExMdBlog.Markdown do
   @moduledoc """
   Posts can be written with the help of markdown and are parsed to HTML.
   """

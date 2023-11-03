@@ -1,4 +1,4 @@
-defmodule AuthBlog.Schema do
+defmodule ExMdBlog.Schema do
   @moduledoc """
   Project common schema.
   """

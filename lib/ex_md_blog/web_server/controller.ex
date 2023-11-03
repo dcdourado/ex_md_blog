@@ -1,10 +1,10 @@
-defmodule AuthBlog.WebServer.Controller do
+defmodule ExMdBlog.WebServer.Controller do
   @moduledoc """
   Controller.
   """
 
-  alias AuthBlog.Posts
-  alias AuthBlog.Posts.Post
+  alias ExMdBlog.Posts
+  alias ExMdBlog.Posts.Post
 
   alias Ecto.Changeset
 

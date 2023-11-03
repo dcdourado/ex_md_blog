@@ -1,11 +1,11 @@
-defmodule AuthBlog.Page do
+defmodule ExMdBlog.Page do
   @moduledoc """
   Blog page domain functions.
   """
 
-  alias AuthBlog.Posts
+  alias ExMdBlog.Posts
 
-  @home_file_path "lib/auth_blog/page/home.html.eex"
+  @home_file_path "lib/ex_md_blog/page/home.html.eex"
   @posts_per_page 5
 
   @doc "Renders page posts and writes HTML file on assets folder"

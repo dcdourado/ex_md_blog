@@ -1,8 +1,8 @@
-defmodule AuthBlog.Posts.PostTest do
-  use AuthBlog.RepoCase, async: true
+defmodule ExMdBlog.Posts.PostTest do
+  use ExMdBlog.RepoCase, async: true
 
-  alias AuthBlog.Posts.Post
-  alias AuthBlog.Repo
+  alias ExMdBlog.Posts.Post
+  alias ExMdBlog.Repo
 
   alias Ecto.Changeset
 

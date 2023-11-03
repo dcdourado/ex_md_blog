@@ -1,10 +1,10 @@
-defmodule AuthBlog.Posts do
+defmodule ExMdBlog.Posts do
   @moduledoc """
   Post commands.
   """
 
-  alias AuthBlog.Posts.Post
-  alias AuthBlog.{Markdown, Repo}
+  alias ExMdBlog.Posts.Post
+  alias ExMdBlog.{Markdown, Repo}
 
   alias Ecto.Changeset
 

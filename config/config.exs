@@ -1,6 +1,6 @@
 import Config
 
-config :auth_blog,
-  ecto_repos: [AuthBlog.Repo]
+config :ex_md_blog,
+  ecto_repos: [ExMdBlog.Repo]
 
 import_config "#{Mix.env()}.exs"

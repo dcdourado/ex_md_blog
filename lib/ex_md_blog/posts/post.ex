@@ -1,9 +1,9 @@
-defmodule AuthBlog.Posts.Post do
+defmodule ExMdBlog.Posts.Post do
   @moduledoc """
   Post schema.
   """
 
-  use AuthBlog.Schema
+  use ExMdBlog.Schema
 
   alias Ecto.{Changeset, UUID}
 

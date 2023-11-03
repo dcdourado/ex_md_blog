@@ -1,7 +1,7 @@
-defmodule AuthBlog.Repo do
+defmodule ExMdBlog.Repo do
   @moduledoc false
 
   use Ecto.Repo,
-    otp_app: :auth_blog,
+    otp_app: :ex_md_blog,
     adapter: Ecto.Adapters.Postgres
 end

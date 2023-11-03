@@ -1,9 +1,9 @@
-defmodule AuthBlog.MixProject do
+defmodule ExMdBlog.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :auth_blog,
+      app: :ex_md_blog,
       version: "0.3.0",
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
@@ -18,7 +18,7 @@ defmodule AuthBlog.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {AuthBlog.Application, []}
+      mod: {ExMdBlog.Application, []}
     ]
   end
 
