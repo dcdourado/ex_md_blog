@@ -14,7 +14,6 @@ defmodule ExMdBlog.WebServer do
   # Api
 
   def start_link([port: port] = opts) when is_integer(port) do
-
     GenServer.start_link(__MODULE__, opts, name: @name)
   end
 

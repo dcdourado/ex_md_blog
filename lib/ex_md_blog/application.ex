@@ -8,7 +8,6 @@ defmodule ExMdBlog.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {ExMdBlog.Repo, []},
       {ExMdBlog.WebServer, [port: @port]}
     ]
 

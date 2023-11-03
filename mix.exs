@@ -34,16 +34,8 @@ defmodule ExMdBlog.MixProject do
       # Code style
       {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
 
-      # Database
-      {:ecto, "~> 3.10.3"},
-      {:ecto_sql, "~> 3.10.2"},
-      {:postgrex, "~> 0.17.3"},
-
-      # Testing
-      {:ex_machina, "~> 2.7.0", only: :test},
-
       # Observing
-      {:telemetry, "~> 1.2.1"},
+      {:telemetry, "~> 1.2.1"}
     ]
   end
 

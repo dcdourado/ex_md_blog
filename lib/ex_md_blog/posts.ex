@@ -6,53 +6,18 @@ defmodule ExMdBlog.Posts do
   alias ExMdBlog.Posts.Post
   alias ExMdBlog.{Markdown, Repo}
 
-  alias Ecto.Changeset
-
   @doc "Fetches a post"
-  @spec fetch(filters :: Keyword.t()) ::
-          {:ok, Post.t()} | {:error, :not_found | :too_many_results}
-  def fetch(filters) when is_list(filters) do
-    case Repo.get_by(Post, filters) do
-      nil -> {:error, :not_found}
-      post -> {:ok, post}
-    end
-  rescue
-    Ecto.MultipleResultsError -> {:error, :too_many_results}
-  end
+  defdelegate fetch(id), to: Repo
 
   @doc "Lists posts"
   @spec list() :: list(Post.t())
-  def list(opts \\ []) do
-    Repo.all(Post, opts)
-  end
+  def list do
+    {:ok, first_post} =
+      fetch("dependency-inversion-on-elixir-using-ports-and-adapters-design-pattern")
 
-  @doc "Inserts a post"
-  @spec insert(params :: map()) :: {:ok, Post.t()} | {:error, Changeset.t()}
-  def insert(params) when is_map(params) do
-    params
-    |> Post.changeset()
-    |> Repo.insert()
-  end
+    {:ok, second_post} = fetch("understanding-genstage-back-pressure-mechanism")
 
-  @doc "Updates a post"
-  @spec update(post :: Post.t(), params :: map()) ::
-          {:ok, Post.t()} | {:error, Changeset.t()}
-  def update(%Post{} = post, params) when is_map(params) do
-    post
-    |> Post.changeset(params)
-    |> Repo.update()
-  end
-
-  @doc "Soft deletes a post"
-  @spec delete(post :: Post.t()) :: :ok | {:error, Changeset.t() | :already_deleted}
-  def delete(%Post{} = post) do
-    post
-    |> Post.changeset(%{deleted_at: NaiveDateTime.utc_now()})
-    |> Repo.update()
-    |> case do
-      {:ok, _} -> :ok
-      error -> error
-    end
+    [first_post, second_post]
   end
 
   @doc "Wraps a post on HTML string"
@@ -64,6 +29,13 @@ defmodule ExMdBlog.Posts do
     """
     |> Markdown.render()
     |> enclose_with("section")
+  end
+
+  def to_html([%Post{} | _] = posts) do
+    posts
+    |> Stream.map(&to_html/1)
+    |> Enum.join("\n")
+    |> enclose_with("main")
   end
 
   defp enclose_with(content, tag), do: "<#{tag}>#{content}</#{tag}>"

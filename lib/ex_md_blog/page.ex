@@ -9,8 +9,8 @@ defmodule ExMdBlog.Page do
   @posts_per_page 5
 
   @doc "Renders page posts and writes HTML file on assets folder"
-  @spec render_page_posts(page :: non_neg_integer()) :: String.t()
-  def render(page_number) when is_integer(page_number) and page_number > 0 do
+  @spec render(page_number :: non_neg_integer()) :: String.t()
+  def render(page_number \\ @posts_per_page) when is_integer(page_number) and page_number > 0 do
     html_posts = render_page_posts(page_number)
 
     full_html =
@@ -32,9 +32,5 @@ defmodule ExMdBlog.Page do
     end
   end
 
-  defp render_page_posts(page) do
-    [limit: @posts_per_page, offset: (page - 1) * @posts_per_page, order_by: [inserted_at: :desc]]
-    |> Posts.list()
-    |> Enum.map_join(&Posts.to_html/1)
-  end
+  defp render_page_posts(_page), do: Posts.list() |> Posts.to_html()
 end

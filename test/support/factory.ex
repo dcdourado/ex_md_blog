@@ -1,8 +1,6 @@
 defmodule ExMdBlog.Factory do
   @moduledoc false
 
-  use ExMachina.Ecto, repo: ExMdBlog.Repo
-
   alias ExMdBlog.Posts.Post
 
   def post_factory do
