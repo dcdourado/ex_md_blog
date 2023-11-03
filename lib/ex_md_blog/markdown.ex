@@ -7,10 +7,25 @@ defmodule ExMdBlog.Markdown do
   @spec render(String.t()) :: String.t()
   def render(content) when is_binary(content) do
     content
-    |> String.split("\n")
-    |> Enum.map_join(&process_line/1)
+    |> String.split(~r/\\n?```|\n+/)
+    |> Enum.reduce({"", false}, fn
+      "```", {acc, false = _code_block_started} ->
+        {acc <> start_code_block(), true}
+
+      "```", {acc, true = _code_block_started} ->
+        {acc <> end_code_block(), false}
+
+      code_line, {acc, true = _code_block_started} ->
+        {acc <> code_line <> "\n", true}
+
+      regular_line, {acc, false = _code_block_started} ->
+        {acc <> process_line(regular_line), false}
+    end)
     |> enclose_lists()
   end
+
+  defp start_code_block, do: "<pre><code>"
+  defp end_code_block, do: "</code></pre>"
 
   defp process_line(line) do
     line
@@ -36,7 +51,7 @@ defmodule ExMdBlog.Markdown do
     |> String.replace(~r/\[(.+?)\]\((.+?)\)/, "<a href=\"\\2\">\\1</a>")
   end
 
-  defp enclose_lists(content) do
+  defp enclose_lists({content, _}) do
     String.replace(content, ~r/(<li>.*?<\/li>)+/, "<ul>\\0</ul>")
   end
 end

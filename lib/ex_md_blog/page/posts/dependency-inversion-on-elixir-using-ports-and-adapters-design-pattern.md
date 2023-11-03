@@ -24,7 +24,7 @@ By deriving the Dependency Inversion principle on Elixir it is possible to imple
 
 Check out this quick demonstration:
 
-```elixir
+```
 defmodule MySystem.SmsNotificationPort do
   @moduledoc """
   Sends SMS to users using configured SMS adapter.
@@ -55,7 +55,7 @@ end
 ```
 
 And on config.exs we would setup:
-```elixir
+```
 # …
 
 config :my_system, MySystem.SmsNotificationPort,
@@ -68,7 +68,7 @@ The same principle is used on Dependency Injection design pattern, given that yo
 
 
 This means you could execute the command below on a running application and change the SMS API used on your system.
-```elixir
+```
 Application.put_env(:my_system, MySystem.SmsNotificationPort, MySystem.ZenviaSmsAdapter)
 ```
 
