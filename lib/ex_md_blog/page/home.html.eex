@@ -15,10 +15,18 @@
     }
 
     section {
+        display: flex;
+        flex-direction: column;
         background-color: #f0f0f0;
         border: 2px solid #303030;
         border-radius: 2px;
         padding: 10px;
+    }
+
+    img {
+        max-width: 75%;
+        display: block;
+        margin: 0 auto;
     }
 
     footer {

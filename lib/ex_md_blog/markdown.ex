@@ -19,7 +19,7 @@ defmodule ExMdBlog.Markdown do
   end
 
   defp process_line_start("#" <> header), do: enclose_header(header, 1)
-  defp process_line_start("* " <> line_item), do: enclose_list_item(line_item)
+  defp process_line_start("- " <> line_item), do: enclose_list_item(line_item)
   defp process_line_start(""), do: ""
   defp process_line_start(regular_line), do: "<p>#{regular_line}</p>"
 
@@ -30,8 +30,10 @@ defmodule ExMdBlog.Markdown do
 
   defp process_line_tags(line) do
     line
-    |> String.replace(~r/__(.*?)__/, "<strong>\\1</strong>")
+    |> String.replace(~r/\*\*(.*?)\*\*/, "<strong>\\1</strong>")
     |> String.replace(~r/_(.*?)_/, "<em>\\1</em>")
+    |> String.replace(~r/!\[(.+?)\]\((.+?)\)/, "<img src=\"\\2\" alt=\"\\1\" />")
+    |> String.replace(~r/\[(.+?)\]\((.+?)\)/, "<a href=\"\\2\">\\1</a>")
   end
 
   defp enclose_lists(content) do
