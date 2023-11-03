@@ -4,8 +4,8 @@ defmodule ExMdBlog.MixProject do
   def project do
     [
       app: :ex_md_blog,
-      version: "0.3.0",
-      elixir: "~> 1.12",
+      version: "1.0.0",
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       elixirc_paths: elixirc_paths(Mix.env()),
