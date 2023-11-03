@@ -11,18 +11,6 @@ jobs:
 
     name: Build and test
     runs-on: ubuntu-latest
-    
-    services:
-      db:
-        image: postgres:11
-        ports: ['5432:5432']
-        env:
-          POSTGRES_PASSWORD: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
 
     steps:
     - uses: actions/checkout@v2
@@ -43,7 +31,5 @@ jobs:
       run: MIX_ENV=test mix compile --warnings-as-errors
     - name: Credo
       run: MIX_ENV=test mix credo --strict
-    - name: Setup database
-      run: mix test.setup
     - name: Run tests
       run: mix test

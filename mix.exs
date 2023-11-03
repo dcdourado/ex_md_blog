@@ -14,7 +14,6 @@ defmodule ExMdBlog.MixProject do
     ]
   end
 
-  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: [:logger],
@@ -55,11 +54,6 @@ defmodule ExMdBlog.MixProject do
   end
 
   defp aliases do
-    [
-      setup: ["ecto.create", "ecto.migrate"],
-      reset: ["ecto.drop", "setup"],
-      "test.setup": ["ecto.create", "ecto.migrate"],
-      "test.reset": ["ecto.drop", "test.setup"]
-    ]
+    []
   end
 end

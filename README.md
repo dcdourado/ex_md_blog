@@ -26,12 +26,8 @@ mix deps.get
 mix deps.compile
 mix compile
 
-# spin database
-docker compose up -d
-
-mix ecto.create
-mix ecto.migrate
-
 # run
 iex -S mix
 ```
+
+Blog can be accessed at http://localhost:8080/
