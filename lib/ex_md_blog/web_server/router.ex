@@ -26,6 +26,7 @@ defmodule ExMdBlog.WebServer.Router do
        end)
        |> Enum.concat([
          {"/", :cowboy_static, {:file, html_path}},
+         {"/assets/[...]", :cowboy_static, {:priv_dir, :ex_md_blog, "assets"}},
          {"/[...]", RESTHandler, nil}
        ])}
     ]
