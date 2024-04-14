@@ -11,13 +11,11 @@ defmodule ExMdBlog.Page do
   @doc "Renders page posts and writes HTML file on assets folder"
   @spec render(page_number :: non_neg_integer()) :: String.t()
   def render(page_number \\ @posts_per_page) when is_integer(page_number) and page_number > 0 do
-    html_posts = render_page_posts(page_number)
-
     full_html =
       EEx.eval_file(@home_file_path,
         blog_title: "dcdourado.me",
         blog_description: "My journey learnings and thoughts as a software engineer",
-        posts: html_posts,
+        post_callouts: render_post_callouts(),
         author: "dcdourado",
         linkedin: "https://linkedin.com/in/dcdourado",
         github: "https://github.com/dcdourado"
@@ -32,5 +30,9 @@ defmodule ExMdBlog.Page do
     end
   end
 
-  defp render_page_posts(_page), do: Posts.list() |> Posts.to_html()
+  defp render_post_callouts do
+    Posts.list()
+    |> Stream.map(&Posts.to_callout_html/1)
+    |> Enum.join("\n")
+  end
 end

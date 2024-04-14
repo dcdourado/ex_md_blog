@@ -86,7 +86,7 @@
         <h4><%= blog_description %>
     </header>
     <main>
-        <%= posts %>
+        <%= post_callouts %>
     </main>
     <footer>
         <span>Maintained by @<%= author %></span>

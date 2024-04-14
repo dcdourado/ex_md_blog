@@ -38,5 +38,18 @@ defmodule ExMdBlog.Posts do
     |> enclose_with("main")
   end
 
+  @doc "Wraps a post call-out on HTML string"
+  @spec to_callout_html(post :: Post.t()) :: String.t()
+  def to_callout_html(%Post{} = post) do
+    """
+    # #{post.title}
+    Continue reading...
+    """
+    |> Markdown.render()
+    |> enclose_with("section")
+    |> link_to("/posts/#{post.id}")
+  end
+
   defp enclose_with(content, tag), do: "<#{tag}>#{content}</#{tag}>"
+  defp link_to(content, url), do: "<a href=\"#{url}\">#{content}</a>"
 end
