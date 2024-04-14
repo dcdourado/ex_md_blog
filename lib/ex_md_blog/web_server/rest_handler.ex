@@ -25,22 +25,15 @@ defmodule ExMdBlog.WebServer.RESTHandler do
     }
 
     {status, body} = handler.(req, params)
-    encoded_body = Jason.encode!(body)
 
-    req =
-      if is_map(encoded_body) do
-        :cowboy_req.set_resp_body(encoded_body, req)
-      else
-        req
-      end
-
+    req = :cowboy_req.set_resp_body(body, req)
     req = :cowboy_req.set_resp_headers(reply_headers(), req)
 
     {:ok, :cowboy_req.reply(status, req), %{}}
   end
 
   defp reply_error(req, type) when is_binary(type) do
-    req = :cowboy_req.set_resp_body(error(type), req)
+    req = :cowboy_req.set_resp_body("Error: #{type}", req)
     req = :cowboy_req.set_resp_headers(reply_headers(), req)
 
     {:ok, :cowboy_req.reply(404, req), %{}}
@@ -54,7 +47,7 @@ defmodule ExMdBlog.WebServer.RESTHandler do
   defp method(%{method: "OPTIONS"}), do: :options
 
   defp reply_headers do
-    %{"content-type" => "application/json"}
+    %{"content-type" => "text/html"}
   end
 
   defp parse_body!(req) do
@@ -73,9 +66,5 @@ defmodule ExMdBlog.WebServer.RESTHandler do
     |> :cowboy_req.parse_qs()
     |> Enum.reject(&(&1 == true))
     |> Map.new()
-  end
-
-  defp error(type) do
-    Jason.encode!(%{error: type})
   end
 end
