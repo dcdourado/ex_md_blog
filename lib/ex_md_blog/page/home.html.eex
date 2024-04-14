@@ -78,19 +78,28 @@
         }
     }
     </style>
-    <title><%= blog_title %></title>
+    <title>dcdourado</title>
 </head>
 <body>
-    <header>
-        <h1><%= blog_title %></h1>
-        <h4><%= blog_description %>
+    <header style="display: flex; flex-direction: row; margin-top: 5vh">
+        <img style="width: 165px; height=auto; border-radius: 10%" src="assets/images/profile.png" />
+        <div style="flex: 1; display: flex; flex-direction: column; margin-left: 5vw">
+            <h1>Diogo Carneiro Dourado</h1>
+            <h4>
+                I am passionate about leveraging technology to improve people's lives.
+                I began programming for enjoyment in 2009, creating scripts and websites.
+                I graduated with a Bachelor's degree in Computer Engineering from the Federal University of Itajubá between 2017 and 2022.
+                Since 2019, I have been working professionally as a software engineer, gaining valuable experience at renowned organizations such as Stone and QuintoAndar.
+            </h4>
+        </div>
     </header>
     <main>
+        <h1>Posts</h1>
         <%= post_callouts %>
     </main>
-    <footer>
-        <span>Maintained by @<%= author %></span>
-        <span>Find me on <a href="<%= linkedin %>">Linkedin</a> and <a href="<%= github %>">Github</a></span>
+    <footer style="margin-bottom: 1vh">
+        <span>Maintained by @dcdourado</span>
+        <span>Find me on <a href="https://linkedin.com/in/dcdourado">Linkedin</a> and <a href="https://github.com/dcdourado">Github</a></span>
     </footer>
 </body>
 </html>

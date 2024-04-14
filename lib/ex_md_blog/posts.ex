@@ -42,7 +42,7 @@ defmodule ExMdBlog.Posts do
   @spec to_callout_html(post :: Post.t()) :: String.t()
   def to_callout_html(%Post{} = post) do
     """
-    # #{post.title}
+    ### #{post.title}
     Continue reading...
     """
     |> Markdown.render()
