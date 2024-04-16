@@ -5,13 +5,16 @@ defmodule ExMdBlog.Repo.StaticFileRepoAdapter do
 
   @behaviour ExMdBlog.Repo
 
-  @posts_path_prefix "lib/ex_md_blog/page/posts/"
+  @posts_path "/priv/posts/"
 
+  require Logger
   alias ExMdBlog.Posts.Post
 
   @impl true
   def fetch(id) do
-    case File.read(@posts_path_prefix <> "#{id}.md") do
+    posts_full_path = Application.app_dir(:ex_md_blog) <> @posts_path <> "#{id}.md"
+
+    case File.read(posts_full_path) do
       {:ok, content} -> {:ok, build_post(id, content)}
       {:error, :enoent} -> {:error, :not_found}
     end
