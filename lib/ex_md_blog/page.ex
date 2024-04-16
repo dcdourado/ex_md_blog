@@ -6,16 +6,18 @@ defmodule ExMdBlog.Page do
   require Logger
   alias ExMdBlog.Posts
 
-  @home_file_path "lib/ex_md_blog/page/home.html.eex"
+  @home_path "/priv/pages/home.html.eex"
   @posts_per_page 5
 
   @doc "Renders page posts and writes HTML file on assets folder"
   @spec render(page_number :: non_neg_integer()) :: {:ok, path :: String.t()} | {:error, any()}
   def render(page_number \\ @posts_per_page) when is_integer(page_number) and page_number > 0 do
-    full_html = EEx.eval_file(@home_file_path, post_callouts: render_post_callouts())
+    home_full_path = Application.app_dir(:ex_md_blog) <> @home_path
+
+    full_html = EEx.eval_file(home_full_path, post_callouts: render_post_callouts())
 
     # removing .eex of the original path
-    output_path = String.slice(@home_file_path, 0, String.length(@home_file_path) - 4)
+    output_path = String.slice(home_full_path, 0, String.length(home_full_path) - 4)
 
     case File.write(output_path, full_html) do
       :ok ->
