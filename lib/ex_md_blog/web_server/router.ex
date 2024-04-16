@@ -8,10 +8,8 @@ defmodule ExMdBlog.WebServer.Router do
 
   alias ExMdBlog.WebServer.{Controller, RESTHandler}
 
-  @namespace "/api/v1"
-
   @routes [
-    {"/posts", get: &Controller.posts_index/2}
+    {"/posts/:id", get: &Controller.get_post/2}
   ]
 
   @doc "Builds routing list for cowboy"
@@ -22,10 +20,11 @@ defmodule ExMdBlog.WebServer.Router do
       {:_,
        @routes
        |> Enum.map(fn {path, path_handlers} ->
-         {@namespace <> path, RESTHandler, path_handlers}
+         {path, RESTHandler, path_handlers}
        end)
        |> Enum.concat([
          {"/", :cowboy_static, {:file, html_path}},
+         {"/assets/[...]", :cowboy_static, {:priv_dir, :ex_md_blog, "assets"}},
          {"/[...]", RESTHandler, nil}
        ])}
     ]
