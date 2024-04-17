@@ -3,8 +3,6 @@ defmodule ExMdBlog.WebServer.Router do
   Defines routes and links them to `ExMdBlog.WebServer.Controller` by method.
   """
 
-  alias ExMdBlog.WebServer.RESTHandler
-
   @doc "Builds routing list for cowboy"
   @spec build(
           home_path :: String.t(),
@@ -21,8 +19,7 @@ defmodule ExMdBlog.WebServer.Router do
        post_routes ++
          [
            {"/", :cowboy_static, {:file, home_path}},
-           {"/assets/[...]", :cowboy_static, {:priv_dir, :ex_md_blog, "assets"}},
-           {"/[...]", RESTHandler, nil}
+           {"/assets/[...]", :cowboy_static, {:priv_dir, :ex_md_blog, "assets"}}
          ]}
     ]
   end
