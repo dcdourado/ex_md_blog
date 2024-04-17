@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <style type="text/css">
+    body {
+        margin: 0;
+        padding: 0 2vw;
+        background-color: #f5feff; /* Light blue background for the entire page */
+        font-family: 'Roboto', sans-serif;
+    }
+
+    main {
+        margin: 5vh 0;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        background-color: #f5f0e3; /* Soft yellow background for sections */
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        padding: 20px; /* Increased padding for a book-like feel */
+        margin-bottom: 20px; /* Add some space between posts and footer */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow */
+    }
+
+    p {
+        text-indent: 1.5em;
+        line-height: 1.5; /* Improve line spacing for readability */
+    }
+
+    img {
+        max-width: 100%; /* Allow images to span the width of the section */
+        display: block;
+        margin: 0 auto;
+        border-radius: 5px; /* Add rounded corners to images */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow to images */
+    }
+
+    pre {
+        background-color: #333; /* Dark gray background for code blocks */
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        padding: 10px;
+        overflow: auto;
+        line-height: 1.4;
+        color: #fff; /* White text color for code blocks */
+        font-size: 14px;
+        font-family: Consolas, 'Courier New', monospace;
+    }
+
+    footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        font-size: 14px; /* Adjust font size for the footer */
+        color: #555; /* Slightly darker text color for the footer */
+    }
+
+    @media only screen and (max-width: 767px) {
+        body {
+            padding: 0 2vw;
+        }
+    }
+
+    @media only screen and (min-width: 768px) {
+        body {
+            padding: 0 15vw;
+        }
+    }
+    </style>
+    <title>Diogo Carneiro Dourado</title>
+</head>
+<body style="margin-top: 5vh">
+    <%= content %>
+    <footer style="margin-bottom: 1vh">
+        <span>Maintained by @dcdourado</span>
+        <span>Find me on <a href="https://linkedin.com/in/dcdourado">Linkedin</a> and <a href="https://github.com/dcdourado">Github</a></span>
+    </footer>
+</body>
+</html>

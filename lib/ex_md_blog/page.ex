@@ -6,33 +6,56 @@ defmodule ExMdBlog.Page do
   require Logger
   alias ExMdBlog.Posts
 
-  @home_path "/priv/pages/home.html.eex"
-  @posts_per_page 5
+  @pages_path "/priv/pages/"
+  @base_path @pages_path <> "base.html.eex"
+  @home_path @pages_path <> "home.html.eex"
 
-  @doc "Renders page posts and writes HTML file on assets folder"
-  @spec render(page_number :: non_neg_integer()) :: {:ok, path :: String.t()} | {:error, any()}
-  def render(page_number \\ @posts_per_page) when is_integer(page_number) and page_number > 0 do
+  @doc "Renders home page and writes HTML file on pages folder"
+  @spec render_home() :: path :: String.t()
+  def render_home do
     home_full_path = Application.app_dir(:ex_md_blog) <> @home_path
+    home_html = EEx.eval_file(home_full_path, post_callouts: render_post_callouts())
 
-    full_html = EEx.eval_file(home_full_path, post_callouts: render_post_callouts())
+    base_full_path = Application.app_dir(:ex_md_blog) <> @base_path
+    full_html = EEx.eval_file(base_full_path, content: home_html)
 
     # removing .eex of the original path
     output_path = String.slice(home_full_path, 0, String.length(home_full_path) - 4)
 
-    case File.write(output_path, full_html) do
-      :ok ->
-        Logger.info("HTML file written to #{output_path}")
-        {:ok, output_path}
-
-      err ->
-        Logger.error("Error writing HTML file: #{inspect(err)}")
-        err
-    end
+    :ok = write_file(output_path, full_html)
+    output_path
   end
 
   defp render_post_callouts do
     Posts.list()
     |> Stream.map(&Posts.to_callout_html/1)
     |> Enum.join("\n")
+  end
+
+  @doc "Renders a list of post pages, writing them down in HTML on pages folder"
+  @spec render_posts() :: list({id :: String.t(), path :: String.t()})
+  def render_posts do
+    Enum.map(Posts.list(), fn post ->
+      post_path = @pages_path <> post.id <> ".html"
+      post_full_path = Application.app_dir(:ex_md_blog) <> post_path
+      post_html = Posts.to_html(post)
+
+      base_full_path = Application.app_dir(:ex_md_blog) <> @base_path
+      full_html = EEx.eval_file(base_full_path, content: post_html)
+
+      :ok = write_file(post_full_path, full_html)
+      {post.id, post_full_path}
+    end)
+  end
+
+  defp write_file(output_path, full_html) do
+    case File.write(output_path, full_html) do
+      :ok ->
+        Logger.info("HTML file written to #{output_path}")
+
+      err ->
+        Logger.error("Error writing HTML file: #{inspect(err)}")
+        err
+    end
   end
 end

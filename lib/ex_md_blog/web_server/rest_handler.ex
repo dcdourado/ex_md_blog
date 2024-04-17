@@ -9,12 +9,12 @@ defmodule ExMdBlog.WebServer.RESTHandler do
   def init(req, method_handlers) when is_list(method_handlers) do
     case Keyword.fetch(method_handlers, method(req)) do
       {:ok, handler} -> reply_handle(req, handler)
-      :error -> reply_error(req, "invalid_route")
+      :error -> init(req, nil)
     end
   end
 
   def init(req, nil) do
-    reply_error(req, "invalid_route")
+    reply_error(req, "Not found")
   end
 
   defp reply_handle(req, handler) do

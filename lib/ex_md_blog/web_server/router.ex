@@ -1,32 +1,29 @@
 defmodule ExMdBlog.WebServer.Router do
   @moduledoc """
   Defines routes and links them to `ExMdBlog.WebServer.Controller` by method.
-
-  Configuration example:
-    {"/path", method: handler}
   """
 
-  alias ExMdBlog.WebServer.{Controller, RESTHandler}
-
-  @routes [
-    {"/posts/:id", get: &Controller.get_post/2}
-  ]
+  alias ExMdBlog.WebServer.RESTHandler
 
   @doc "Builds routing list for cowboy"
-  @spec build(html_path :: String.t()) ::
-          list({route :: String.t(), conn_handler :: module(), path_handler :: fun()})
-  def build(html_path) do
+  @spec build(
+          home_path :: String.t(),
+          post_paths :: list({id :: String.t(), post_path :: String.t()})
+        ) :: routes :: list({:_, any()})
+  def build(home_path, post_paths) do
+    post_routes =
+      Enum.map(post_paths, fn {id, post_path} ->
+        {"/posts/#{id}", :cowboy_static, {:file, post_path}}
+      end)
+
     [
       {:_,
-       @routes
-       |> Enum.map(fn {path, path_handlers} ->
-         {path, RESTHandler, path_handlers}
-       end)
-       |> Enum.concat([
-         {"/", :cowboy_static, {:file, html_path}},
-         {"/assets/[...]", :cowboy_static, {:priv_dir, :ex_md_blog, "assets"}},
-         {"/[...]", RESTHandler, nil}
-       ])}
+       post_routes ++
+         [
+           {"/", :cowboy_static, {:file, home_path}},
+           {"/assets/[...]", :cowboy_static, {:priv_dir, :ex_md_blog, "assets"}},
+           {"/[...]", RESTHandler, nil}
+         ]}
     ]
   end
 end
