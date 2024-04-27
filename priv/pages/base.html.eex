@@ -28,6 +28,14 @@
         justify-content: center;
     }
 
+    header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: flex-start;
+        margin-bottom: 5vh;
+    }
+
     section {
         display: flex;
         flex-direction: column;
@@ -45,7 +53,7 @@
     }
 
     img {
-        max-width: 100%; /* Allow images to span the width of the section */
+        max-width: 80%; /* Allow images to span the width of the section */
         display: block;
         margin: 0 auto;
         border-radius: 5px; /* Add rounded corners to images */
@@ -75,6 +83,10 @@
     @media only screen and (max-width: 767px) {
         body {
             padding: 0 2vw;
+        }
+
+        header {
+            flex-direction: column;
         }
     }
 
