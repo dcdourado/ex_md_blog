@@ -60,6 +60,12 @@
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add a subtle box shadow to images */
     }
 
+    img#profile {
+        width: 165px;
+        height: auto;
+        border-radius: 10%;
+    }
+
     pre {
         background-color: #333; /* Dark gray background for code blocks */
         border: 1px solid #ddd;
@@ -87,6 +93,10 @@
 
         header {
             flex-direction: column;
+        }
+
+        img#profile {
+            width: 100px;
         }
     }
 

@@ -1,5 +1,5 @@
 <header>
-    <img style="width: 165px; height: auto; border-radius: 10%" src="assets/images/profile.png" />
+    <img id="profile" src="assets/images/profile.png" />
     <div style="flex: 1; display: flex; flex-direction: column; margin-left: 5vw">
         <h1>Diogo Carneiro Dourado</h1>
         <h4>
