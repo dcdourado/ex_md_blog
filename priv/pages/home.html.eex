@@ -1,4 +1,4 @@
-<header>
+<main id="home">
     <img id="profile" src="assets/images/profile.png" />
     <div style="flex: 1; display: flex; flex-direction: column; margin-left: 5vw">
         <h1>Diogo Carneiro Dourado</h1>
@@ -9,8 +9,4 @@
             Since 2019, I have been working professionally as a software engineer, gaining valuable experience at renowned organizations such as Stone and QuintoAndar.
         </h4>
     </div>
-</header>
-<main>
-    <h1>Posts</h1>
-    <%= post_callouts %>
 </main>
