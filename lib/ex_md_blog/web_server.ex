@@ -6,7 +6,6 @@ defmodule ExMdBlog.WebServer do
   use GenServer
   require Logger
 
-  alias ExMdBlog.Page
   alias ExMdBlog.WebServer.Router
 
   @name :webserver
@@ -22,16 +21,15 @@ defmodule ExMdBlog.WebServer do
   @impl GenServer
   def init(port: port) do
     Logger.info("Starting web server on port #{port}")
-    home_path = Page.render_home()
-    post_id_paths = Page.render_posts()
-    opts = %{env: %{dispatch: dispatch_config(home_path, post_id_paths)}}
+
+    opts = %{env: %{dispatch: dispatch_config()}}
 
     {:ok, _} = :cowboy.start_clear(:http, [port: port], opts)
   end
 
   # Private functions
 
-  defp dispatch_config(home_path, post_id_paths) do
-    :cowboy_router.compile(Router.build(home_path, post_id_paths))
+  defp dispatch_config() do
+    :cowboy_router.compile(Router.build())
   end
 end

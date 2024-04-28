@@ -1,0 +1,4 @@
+<main>
+    <h1>Posts</h1>
+    <%= post_callouts %>
+</main>
