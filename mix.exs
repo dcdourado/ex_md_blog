@@ -34,7 +34,10 @@ defmodule ExMdBlog.MixProject do
       {:credo, "~> 1.7.1", only: [:dev, :test], runtime: false},
 
       # Observing
-      {:telemetry, "~> 1.2.1"}
+      {:telemetry, "~> 1.2.1"},
+
+      # Google
+      {:goth, "~> 1.4.3"}
     ]
   end
 

@@ -10,6 +10,8 @@ I want to write more stuff and maybe this is going to be an incentive to do it m
 
 ## Setup
 
+Configure the `GOOGLE_APPLICATION_CREDENTIALS_JSON` environment variable to authorize Google Drive posts.
+
 ```shell
 asdf install
 
