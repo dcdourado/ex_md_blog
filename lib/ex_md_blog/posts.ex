@@ -3,21 +3,14 @@ defmodule ExMdBlog.Posts do
   Post commands.
   """
 
+  alias ExMdBlog.Markdown
   alias ExMdBlog.Posts.Post
-  alias ExMdBlog.{Markdown, Repo}
-
-  @doc "Fetches a post"
-  defdelegate fetch(id), to: Repo
+  alias ExMdBlog.Repo.StaticFileRepoAdapter
 
   @doc "Lists posts"
   @spec list() :: list(Post.t())
   def list do
-    {:ok, first_post} =
-      fetch("dependency-inversion-on-elixir-using-ports-and-adapters-design-pattern")
-
-    {:ok, second_post} = fetch("understanding-genstage-back-pressure-mechanism")
-
-    [first_post, second_post]
+    StaticFileRepoAdapter.all()
   end
 
   @doc "Wraps a post on HTML string"

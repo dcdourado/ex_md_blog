@@ -3,7 +3,11 @@ defmodule ExMdBlog.Repo do
 
   @default_adapter ExMdBlog.Repo.StaticFileRepoAdapter
 
+  @callback all() :: [ExMdBlog.Posts.Post.t()]
+
   @callback fetch(id :: binary()) :: {:ok, ExMdBlog.Posts.Post.t()} | {:error, :not_found}
+
+  def all, do: impl().all()
 
   def fetch(id), do: impl().fetch(id)
 

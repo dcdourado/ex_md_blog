@@ -11,6 +11,16 @@ defmodule ExMdBlog.Repo.StaticFileRepoAdapter do
   alias ExMdBlog.Posts.Post
 
   @impl true
+  def all do
+    {:ok, first_post} =
+      fetch("dependency-inversion-on-elixir-using-ports-and-adapters-design-pattern")
+
+    {:ok, second_post} = fetch("understanding-genstage-back-pressure-mechanism")
+
+    [first_post, second_post]
+  end
+
+  @impl true
   def fetch(id) do
     posts_full_path = Application.app_dir(:ex_md_blog) <> @posts_path <> "#{id}.md"
 
