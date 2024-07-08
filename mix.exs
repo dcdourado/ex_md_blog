@@ -37,7 +37,8 @@ defmodule ExMdBlog.MixProject do
       {:telemetry, "~> 1.2.1"},
 
       # Google
-      {:goth, "~> 1.4.3"}
+      {:goth, "~> 1.4.3"},
+      {:google_api_drive, "~> 0.27.1"}
     ]
   end
 
