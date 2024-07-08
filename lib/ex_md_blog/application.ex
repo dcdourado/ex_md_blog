@@ -8,7 +8,8 @@ defmodule ExMdBlog.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      {ExMdBlog.WebServer, [port: @port]}
+      {ExMdBlog.WebServer, [port: @port]},
+      {Goth, name: ExMdBlog.Goth}
     ]
 
     opts = [strategy: :one_for_one, name: ExMdBlog.Supervisor]

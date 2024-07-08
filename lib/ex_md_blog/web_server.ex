@@ -29,7 +29,7 @@ defmodule ExMdBlog.WebServer do
 
   # Private functions
 
-  defp dispatch_config() do
+  defp dispatch_config do
     :cowboy_router.compile(Router.build())
   end
 end

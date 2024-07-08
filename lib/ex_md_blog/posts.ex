@@ -3,25 +3,29 @@ defmodule ExMdBlog.Posts do
   Post commands.
   """
 
+  alias ExMdBlog.Markdown
   alias ExMdBlog.Posts.Post
-  alias ExMdBlog.{Markdown, Repo}
-
-  @doc "Fetches a post"
-  defdelegate fetch(id), to: Repo
+  alias ExMdBlog.Repo.GoogleDriveRepoAdapter
+  alias ExMdBlog.Repo.StaticFileRepoAdapter
 
   @doc "Lists posts"
   @spec list() :: list(Post.t())
   def list do
-    {:ok, first_post} =
-      fetch("dependency-inversion-on-elixir-using-ports-and-adapters-design-pattern")
-
-    {:ok, second_post} = fetch("understanding-genstage-back-pressure-mechanism")
-
-    [first_post, second_post]
+    GoogleDriveRepoAdapter.all() ++ StaticFileRepoAdapter.all()
   end
 
-  @doc "Wraps a post on HTML string"
+  @doc """
+  Gets post content on HTML string.
+
+  Whent content is nil, it loads the HTML directly from Drive repo.
+  Else, it renders the content as markdown and encloses it with a section tag.
+  """
   @spec to_html(post :: Post.t()) :: String.t()
+  def to_html(%Post{content: nil} = post) do
+    {:ok, html} = GoogleDriveRepoAdapter.fetch(post.id)
+    html
+  end
+
   def to_html(%Post{} = post) do
     """
     # #{post.title}

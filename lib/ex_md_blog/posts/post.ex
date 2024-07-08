@@ -6,7 +6,7 @@ defmodule ExMdBlog.Posts.Post do
   @type t :: %__MODULE__{
           id: String.t(),
           title: String.t(),
-          content: String.t()
+          content: String.t() | nil
         }
 
   defstruct [:id, :title, :content]
