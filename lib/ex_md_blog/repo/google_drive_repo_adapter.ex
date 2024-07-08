@@ -36,9 +36,11 @@ defmodule ExMdBlog.Repo.GoogleDriveRepoAdapter do
   @impl true
   def fetch(id) do
     with {:ok, conn} <- get_conn(),
-         {:ok, %{body: content}} <-
+         {:ok, %{body: html}} <-
            Files.drive_files_export(conn, id, "text/html", alt: "media") do
-      {:ok, content}
+      [_, body_content] = Regex.run(~r/<body[^>]*>(.*?)<\/body>/s, html)
+
+      {:ok, body_content}
     else
       {:error, reason} ->
         Logger.error("Failed to fetch file #{id} because #{inspect(reason)}")
